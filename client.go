@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 type Client struct {
@@ -43,6 +45,7 @@ func (client *Client) Info() (info *Info, error error) {
 		return
 	}
 	body, error := ioutil.ReadAll(client.Response.Body)
+	defer client.Response.Body.Close()
 	if error != nil {
 		return
 	}
@@ -68,10 +71,33 @@ func (client *Client) State() (state *State, error error) {
 		return
 	}
 	body, error := ioutil.ReadAll(client.Response.Body)
+	defer client.Response.Body.Close()
 	if error != nil {
 		return
 	}
 	state = new(State)
 	json.Unmarshal(body, &state)
+	return
+}
+
+type CheckForUpdatesResponse struct {
+	StateFingerprint string
+	ThrottleTimeout  int
+}
+
+func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int) (response *CheckForUpdatesResponse, error error) {
+	request_json := "{\"stateFingerprint\": \"" + stateFingerprint + "\""
+	if waitTimeout != nil {
+		request_json = request_json + "," + strconv.Itoa(*waitTimeout)
+	}
+	request_json = request_json + "}"
+	client.Response, error = http.Post(client.Url+"/osc/checkForUpdates", "application/json", strings.NewReader(request_json))
+	if error != nil {
+		return
+	}
+	body, error := ioutil.ReadAll(client.Response.Body)
+	defer client.Response.Body.Close()
+	response = new(CheckForUpdatesResponse)
+	json.Unmarshal(body, &response)
 	return
 }
