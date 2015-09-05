@@ -86,11 +86,11 @@ type CheckForUpdatesResponse struct {
 }
 
 func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int) (response *CheckForUpdatesResponse, error error) {
-	request_json := "{\"stateFingerprint\": \"" + stateFingerprint + "\""
+	request_json := `{"stateFingerprint": "` + stateFingerprint + `"`
 	if waitTimeout != nil {
-		request_json = request_json + "," + strconv.Itoa(*waitTimeout)
+		request_json = request_json + `,` + strconv.Itoa(*waitTimeout)
 	}
-	request_json = request_json + "}"
+	request_json = request_json + `}`
 	client.Response, error = http.Post(client.Url+"/osc/checkForUpdates", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
@@ -98,6 +98,36 @@ func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int)
 	body, error := ioutil.ReadAll(client.Response.Body)
 	defer client.Response.Body.Close()
 	response = new(CheckForUpdatesResponse)
+	json.Unmarshal(body, &response)
+	return
+}
+
+type CommandExecError struct {
+	Code string
+}
+type CommandExecProgress struct {
+	Completion float32
+}
+type CommandExecResponse struct {
+	Name     string
+	State    string
+	Id       string
+	Results  interface{}
+	Error    CommandExecError
+	Progress CommandExecProgress
+}
+
+func (client *Client) CommandExecute(name string, parameters interface{}, results interface{}) (response *CommandExecResponse, error error) {
+	parameters_json, _ := json.Marshal(parameters)
+	request_json := `{"name": "` + name + `", "parameters": ` + string(parameters_json) + `}`
+	client.Response, error = http.Post(client.Url+"/osc/commands/execute", "application/json", strings.NewReader(request_json))
+	if error != nil {
+		return
+	}
+	body, error := ioutil.ReadAll(client.Response.Body)
+	defer client.Response.Body.Close()
+	response = new(CommandExecResponse)
+	response.Results = results
 	json.Unmarshal(body, &response)
 	return
 }
