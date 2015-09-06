@@ -118,9 +118,9 @@ type CommandExecResponse struct {
 	Progress CommandExecProgress
 }
 
-func (client *Client) CommandExecute(name string, parameters interface{}, results interface{}) (response *CommandExecResponse, error error) {
-	parameters_json, _ := json.Marshal(parameters)
-	request_json := `{"name": "` + name + `", "parameters": ` + string(parameters_json) + `}`
+func (client *Client) CommandExecute(command Command) (response *CommandExecResponse, error error) {
+	parameters_json, _ := json.Marshal(command.GetParameters())
+	request_json := `{"name": "` + command.GetName() + `", "parameters": ` + string(parameters_json) + `}`
 	client.Response, error = http.Post(client.Url+"/osc/commands/execute", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
@@ -128,12 +128,12 @@ func (client *Client) CommandExecute(name string, parameters interface{}, result
 	body, error := ioutil.ReadAll(client.Response.Body)
 	defer client.Response.Body.Close()
 	response = new(CommandExecResponse)
-	response.Results = results
+	response.Results = command.GetResults()
 	json.Unmarshal(body, &response)
 	return
 }
 
-func (client *Client) CommandStatus(id string, results interface{}) (response *CommandExecResponse, error error) {
+func (client *Client) CommandStatus(id string, command Command) (response *CommandExecResponse, error error) {
 	request_json := `{"id": "` + id + `"}`
 	client.Response, error = http.Post(client.Url+"/osc/commands/status", "application/json", strings.NewReader(request_json))
 	if error != nil {
@@ -142,7 +142,7 @@ func (client *Client) CommandStatus(id string, results interface{}) (response *C
 	body, error := ioutil.ReadAll(client.Response.Body)
 	defer client.Response.Body.Close()
 	response = new(CommandExecResponse)
-	response.Results = results
+	response.Results = command.GetResults()
 	json.Unmarshal(body, &response)
 	return
 }
