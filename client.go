@@ -125,11 +125,16 @@ func (client *Client) CommandExecute(command Command) (response *CommandExecResp
 	if error != nil {
 		return
 	}
-	body, error := ioutil.ReadAll(client.Response.Body)
-	defer client.Response.Body.Close()
 	response = new(CommandExecResponse)
-	response.Results = command.GetResults()
-	json.Unmarshal(body, &response)
+	content_type := client.Response.Header.Get("Content-Type")
+	if strings.Contains(content_type, "json") {
+		body, _ := ioutil.ReadAll(client.Response.Body)
+		defer client.Response.Body.Close()
+		response.Results = command.GetResults()
+		json.Unmarshal(body, &response)
+	} else {
+		response.Results = client.Response.Body
+	}
 	return
 }
 
