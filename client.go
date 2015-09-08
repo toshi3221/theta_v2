@@ -13,7 +13,7 @@ type Client struct {
 	Response *http.Response
 }
 
-func OpenClient(url string) (client *Client, error error) {
+func NewClient(url string) (client *Client, error error) {
 	client = new(Client)
 	client.Url = url
 	return
