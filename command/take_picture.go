@@ -1,21 +1,22 @@
 package command
 
 type TakePictureParameters struct {
-        SessionId string `json:"sessionId"`
+	SessionId *string `json:"sessionId"`
 }
 type TakePictureResults struct {
-        FileUri string
+	FileUri *string
 }
 type TakePictureCommand struct {
-	Parameters	TakePictureParameters
-	Results		TakePictureResults
+	Parameters TakePictureParameters
+	Results    TakePictureResults
 }
-func (command *TakePictureCommand) GetName() (string) {
+
+func (command *TakePictureCommand) GetName() string {
 	return `camera.takePicture`
 }
-func (command *TakePictureCommand) GetParameters() (interface{}) {
+func (command *TakePictureCommand) GetParameters() interface{} {
 	return &command.Parameters
 }
-func (command *TakePictureCommand) GetResults() (interface{}) {
+func (command *TakePictureCommand) GetResults() interface{} {
 	return &command.Results
 }

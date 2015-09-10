@@ -1,12 +1,12 @@
 package command
 
 type UpdateSessionParameters struct {
-	SessionId string `json:"sessionId"`
-	Timeout   int    `json:"timeout,omitempty"`
+	SessionId *string `json:"sessionId"`
+	Timeout   *int    `json:"timeout,omitempty"`
 }
 type UpdateSessionResults struct {
-	SessionId string
-	Timeout   int
+	SessionId *string
+	Timeout   *int
 }
 type UpdateSessionCommand struct {
 	Parameters UpdateSessionParameters

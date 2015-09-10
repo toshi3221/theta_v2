@@ -1,7 +1,7 @@
 package command
 
 type DeleteParameters struct {
-	FileUri string `json:"fileUri"`
+	FileUri *string `json:"fileUri"`
 }
 type DeleteResults struct {
 }

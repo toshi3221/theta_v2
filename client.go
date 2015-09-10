@@ -20,23 +20,23 @@ func NewClient(url string) (client *Client, error error) {
 }
 
 type Endpoints struct {
-	HttpPort         int
-	HttpUpdatesPort  int
-	HttpsPort        int
-	HttpsUpdatesPort int
+	HttpPort         *int
+	HttpUpdatesPort  *int
+	HttpsPort        *int
+	HttpsUpdatesPort *int
 }
 
 type Info struct {
-	Manufacturer    string
-	Model           string
-	SerialNumber    string
-	FirmwareVersion string
-	SupportUrl      string
-	Gps             bool
-	Gyro            bool
-	Uptime          int
-	Api             []string
-	Endpoints       Endpoints
+	Manufacturer    *string
+	Model           *string
+	SerialNumber    *string
+	FirmwareVersion *string
+	SupportUrl      *string
+	Gps             *bool
+	Gyro            *bool
+	Uptime          *int
+	Api             *[]string
+	Endpoints       *Endpoints
 }
 
 func (client *Client) Info() (info *Info, error error) {
@@ -55,14 +55,14 @@ func (client *Client) Info() (info *Info, error error) {
 }
 
 type CameraState struct {
-	SessionId      string
-	BatteryLevel   float32
-	StorageChanged bool
+	SessionId      *string
+	BatteryLevel   *float32
+	StorageChanged *bool
 }
 
 type State struct {
-	Fingerprint string
-	State       CameraState
+	Fingerprint *string
+	State       *CameraState
 }
 
 func (client *Client) State() (state *State, error error) {
@@ -81,14 +81,14 @@ func (client *Client) State() (state *State, error error) {
 }
 
 type CheckForUpdatesResponse struct {
-	StateFingerprint string
-	ThrottleTimeout  int
+	StateFingerprint *string
+	ThrottleTimeout  *int
 }
 
 func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int) (response *CheckForUpdatesResponse, error error) {
 	request_json := `{"stateFingerprint": "` + stateFingerprint + `"`
 	if waitTimeout != nil {
-		request_json = request_json + `,` + strconv.Itoa(*waitTimeout)
+		request_json += `,` + strconv.Itoa(*waitTimeout)
 	}
 	request_json = request_json + `}`
 	client.Response, error = http.Post(client.Url+"/osc/checkForUpdates", "application/json", strings.NewReader(request_json))
@@ -103,19 +103,19 @@ func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int)
 }
 
 type CommandExecError struct {
-	Code    string
-	Message string
+	Code    *string
+	Message *string
 }
 type CommandExecProgress struct {
-	Completion float32
+	Completion *float32
 }
 type CommandExecResponse struct {
-	Name     string
-	State    string
-	Id       string
+	Name     *string
+	State    *string
+	Id       *string
 	Results  interface{}
-	Error    CommandExecError
-	Progress CommandExecProgress
+	Error    *CommandExecError
+	Progress *CommandExecProgress
 }
 
 func (client *Client) CommandExecute(command Command) (response *CommandExecResponse, error error) {

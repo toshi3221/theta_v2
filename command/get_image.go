@@ -1,8 +1,8 @@
 package command
 
 type GetImageParameters struct {
-	FileUri string `json:"fileUri"`
-	MaxSize int    `json:"maxSize,omitempty"`
+	FileUri *string `json:"fileUri"`
+	MaxSize *int    `json:"maxSize,omitempty"`
 }
 type GetImageCommand struct {
 	Parameters GetImageParameters
