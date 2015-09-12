@@ -1,9 +1,53 @@
 ## osc
 Open Spherical Camera (OSC) API Client for Golang
 
+## Example
+If you know other API usage, see and execute [examples](examples) go source. 
+```sh
+$ cd $GOPATH/src/github.com/toshi3221/osc/examples
+$ go run info.go http://(osc-host)
+```
+
+### camera.listImages Command
+```go
+package main
+
+import (
+  "fmt"
+  "os"
+  "github.com/toshi3221/osc"
+  "github.com/toshi3221/osc/command"
+)
+
+func main() {
+
+  client, _ := osc.NewClient("host")
+
+  command := new(command.ListImagesCommand)
+  parameters := command.Parameters
+
+  entryCount, maxSize, includeThumb := 10, 10, false
+  parameters.EntryCount = &entryCount
+  parameters.MaxSize = &maxSize
+  parameters.IncludeThumb = &includeThumb
+
+  client.CommandExecute(command)
+
+  results := command.Results
+  fmt.Println("totalEntries:", *results.TotalEntries)
+  if *results.TotalEntries > 0 {
+    entries := *results.Entries
+    for i := range entries {
+      fmt.Printf("{name: %s, uri: %s}\n", *entries[i].Name, *entries[i].Uri)
+    }
+  }
+
+}
+```
+
 ## The MIT License (MIT)
 
-Copyright (c) Toshiharu TAKEMATSU
+Copyright (c) 2015 Toshiharu Takematsu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
