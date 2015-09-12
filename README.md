@@ -24,7 +24,7 @@ func main() {
   client, _ := osc.NewClient("host")
 
   command := new(command.ListImagesCommand)
-  parameters := command.Parameters
+  parameters := &command.Parameters
 
   entryCount, maxSize, includeThumb := 10, 10, false
   parameters.EntryCount = &entryCount
