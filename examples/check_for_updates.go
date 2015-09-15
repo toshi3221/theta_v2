@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/toshi3221/osc"
+	"github.com/toshi3221/theta_v2"
 	"os"
 )
 
@@ -12,7 +12,7 @@ func main() {
 	if len(os.Args) > 1 {
 		host = os.Args[1]
 	}
-	client, _ := osc.NewClient(host)
+	client, _ := theta_v2.NewClient(host)
 
 	res, _ := client.CheckForUpdates("test", nil)
 	if res.StateFingerprint != nil {

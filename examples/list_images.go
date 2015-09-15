@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"github.com/toshi3221/osc"
-	"github.com/toshi3221/osc/command"
+	"github.com/toshi3221/theta_v2"
+	"github.com/toshi3221/theta_v2/command"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 	if len(os.Args) > 1 {
 		host = os.Args[1]
 	}
-	client, _ := osc.NewClient(host)
+	client, _ := theta_v2.NewClient(host)
 
 	command := new(command.ListImagesCommand)
 	parameters := &command.Parameters

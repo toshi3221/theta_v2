@@ -1,11 +1,11 @@
-## osc
-Open Spherical Camera (OSC) API Client for Golang
+## theta_v2
+RICOH THETA API v2 Client for Golang
 
 ## Example
 If you know other API usage, see and execute [examples](examples) go source. 
 ```sh
-$ cd $GOPATH/src/github.com/toshi3221/osc/examples
-$ go run info.go http://(osc-host)
+$ cd $GOPATH/src/github.com/toshi3221/theta_v2/examples
+$ go run info.go http://(theta_v2-host)
 ```
 
 ### camera.listImages Command
@@ -15,13 +15,13 @@ package main
 import (
   "fmt"
   "os"
-  "github.com/toshi3221/osc"
-  "github.com/toshi3221/osc/command"
+  "github.com/toshi3221/theta_v2"
+  "github.com/toshi3221/theta_v2/command"
 )
 
 func main() {
 
-  client, _ := osc.NewClient("host")
+  client, _ := theta_v2.NewClient("host")
 
   command := new(command.ListImagesCommand)
   parameters := &command.Parameters

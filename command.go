@@ -1,4 +1,4 @@
-package osc
+package theta_v2
 
 type Command interface {
 	GetName() string

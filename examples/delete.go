@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/toshi3221/osc"
-	"github.com/toshi3221/osc/command"
+	"github.com/toshi3221/theta_v2"
+	"github.com/toshi3221/theta_v2/command"
 	"os"
 )
 
@@ -18,7 +18,7 @@ func main() {
 		fileUri = os.Args[2]
 	}
 
-	client, _ := osc.NewClient(host)
+	client, _ := theta_v2.NewClient(host)
 
 	deleteCommand := new(command.DeleteCommand)
 	deleteCommand.Parameters.FileUri = &fileUri
