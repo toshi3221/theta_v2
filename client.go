@@ -57,6 +57,12 @@ type CameraState struct {
 	SessionId      *string
 	BatteryLevel   *float32
 	StorageChanged *bool
+	CaptureStatus  *string   `json:"_captureStatus"`
+	RecordedTime   *int      `json:"_recordedTime"`
+	RecordableTime *int      `json:"_recordableTime"`
+	LatestFileUri  *int      `json:"_latestFileUri"`
+	BatteryState   *string   `json:"_batteryState"`
+	CameraError    *[]string `json:"_cameraError"`
 }
 
 type State struct {
