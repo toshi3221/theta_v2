@@ -2,7 +2,6 @@ package command
 
 type UpdateSessionParameters struct {
 	SessionId *string `json:"sessionId"`
-	Timeout   *int    `json:"timeout,omitempty"`
 }
 type UpdateSessionResults struct {
 	SessionId *string

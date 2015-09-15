@@ -4,34 +4,32 @@ type GetMetadataParameters struct {
 	FileUri *string `json:"fileUri"`
 }
 type Exif struct {
-	ExifVersion         *string
-	ImageDescription    *string
-	DateTime            *string
-	ImageWidth          *int
-	ImageLength         *int
-	ColorSpace          *int
-	Compression         *int
-	Orientation         *int
-	Flash               *int
-	FocalLength         *float32
-	WhiteBalance        *int
-	ExposureTime        *float32
-	FNumber             *float32
-	ExposureProgram     *int
-	ISOSpeedRatings     *int
-	ApertureValue       *float32
-	BrightnessValue     *int
-	ExposureBiasValue   *int
-	GPSProcessingMethod *int
-	GPSLatitudeRef      *string
-	GPSLatitude         *float32
-	GPSLongitudeRef     *string
-	GPSLongitude        *float32
-	Make                *string
-	Model               *string
-	Software            *string
-	Copyright           *string
-	MakerNote           *string
+	ExifVersion       *string
+	ImageDescription  *string
+	DateTime          *string
+	ImageWidth        *int
+	ImageLength       *int
+	ColorSpace        *int
+	Compression       *int
+	Orientation       *int
+	Flash             *int
+	FocalLength       *float32
+	WhiteBalance      *int
+	ExposureTime      *float32
+	FNumber           *float32
+	ExposureProgram   *int
+	ISOSpeedRatings   *int
+	ApertureValue     *float32
+	BrightnessValue   *int
+	ExposureBiasValue *int
+	GPSLatitudeRef    *string
+	GPSLatitude       *float32
+	GPSLongitudeRef   *string
+	GPSLongitude      *float32
+	Make              *string
+	Model             *string
+	Software          *string
+	Copyright         *string
 }
 type Xmp struct {
 	ProjectionType               *string

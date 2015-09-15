@@ -7,15 +7,17 @@ type ListImagesParameters struct {
 	IncludeThumb      *bool   `json:"includeThumb,omitempty"`
 }
 type ImageEntry struct {
-	Name         *string
-	Uri          *string
-	Size         *int
-	DateTimeZone *string
-	Lat          *float32
-	Lng          *float32
-	Width        *int
-	Height       *int
-	Thumbnail    *string
+	Name                   *string
+	Uri                    *string
+	Size                   *int
+	DateTimeZone           *string
+	Lat                    *float32
+	Lng                    *float32
+	Width                  *int
+	Height                 *int
+	Thumbnail              *string
+	ThumbSize              *int    `json:"_thumbSize"`
+	IntervalCaptureGroupId *string `json:"_intervalCaptureGroupId"`
 }
 type ListImagesResults struct {
 	Entries           *[]ImageEntry

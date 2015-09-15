@@ -1,7 +1,6 @@
 package command
 
 type StartSessionParameters struct {
-	WaitTimeout *int `json:"waitTimout,omitempty"`
 }
 type StartSessionResults struct {
 	SessionId *string
