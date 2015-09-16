@@ -58,6 +58,13 @@ type Options struct {
 	ImageStabilization          *string                 `json:"imageStabilization,omitempty"`
 	ImageStabilizationSupport   *[]string               `json:"imageStabilizationSupport,omitempty"`
 	WifiPassword                *string                 `json:"wifiPassword,omitempty"`
+	CaptureInterval             *int                    `json:"_captureInterval,omitempty"`
+	CaptureNumber               *int                    `json:"_captureNumber,omitempty"`
+	Filter                      *string                 `json:"_filter,omitempty"`
+	HDMIreso                    *string                 `json:"_HDMIreso,omitempty"`
+	RemainingVideos             *int                    `json:"_remainingVideos,omitempty"`
+	ShutterVolume               *int                    `json:"_shutterVolume,omitempty"`
+	WlanChannel                 *int                    `json:"_wlanChannel,omitempty"`
 }
 
 type GetOptionsParameters struct {
