@@ -14,7 +14,6 @@ package main
 
 import (
   "fmt"
-  "os"
   "github.com/toshi3221/osc"
   "github.com/toshi3221/osc/command"
 )
@@ -34,7 +33,6 @@ func main() {
   client.CommandExecute(command)
 
   results := command.Results
-  fmt.Println("totalEntries:", *results.TotalEntries)
   if *results.TotalEntries > 0 {
     entries := *results.Entries
     for i := range entries {
