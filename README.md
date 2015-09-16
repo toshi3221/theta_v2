@@ -14,7 +14,6 @@ package main
 
 import (
   "fmt"
-  "os"
   "github.com/toshi3221/theta_v2"
   "github.com/toshi3221/theta_v2/command"
 )
@@ -34,7 +33,6 @@ func main() {
   client.CommandExecute(command)
 
   results := command.Results
-  fmt.Println("totalEntries:", *results.TotalEntries)
   if *results.TotalEntries > 0 {
     entries := *results.Entries
     for i := range entries {
