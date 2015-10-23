@@ -5,8 +5,9 @@ RICOH THETA API v2 Client for Golang
 If you know other API usage, see and execute [examples](examples) go source. 
 ```sh
 $ cd $GOPATH/src/github.com/toshi3221/theta_v2/examples
-$ go run info.go http://(theta_v2-host)
+$ go run info.go [http://(theta_v2-host)]
 ```
+You can omit hostname from info.go argument. Default is THETA S host (http://192.168.1.1).
 
 ### camera.listImages Command
 ```go
