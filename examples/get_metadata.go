@@ -27,10 +27,11 @@ func main() {
 	exif := getMetadataCommand.Results.Exif
 	fmt.Println("Exif:")
 	fmt.Println("  ExifVersion:", *exif.ExifVersion)
-	fmt.Println("  ImageDescription:", *exif.ImageDescription)
+	fmt.Println("  ExposureTime:", *exif.ExposureTime)
+	fmt.Println("  ISOSpeedRatings:", *exif.ISOSpeedRatings)
 	xmp := getMetadataCommand.Results.Xmp
 	fmt.Println("XMP:")
 	fmt.Println("  ProjectionType:", *xmp.ProjectionType)
-	fmt.Println("  UsePanoramaViewer:", *xmp.UsePanoramaViewer)
-
+	fmt.Println("  CroppedAreaImageWidthPixels:", *xmp.CroppedAreaImageWidthPixels)
+	fmt.Println("  CroppedAreaImageHeightPixels:", *xmp.CroppedAreaImageHeightPixels)
 }

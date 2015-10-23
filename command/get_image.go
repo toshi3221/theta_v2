@@ -2,7 +2,7 @@ package command
 
 type GetImageParameters struct {
 	FileUri *string `json:"fileUri"`
-	Type    *string `json:"_type"`
+	Type    *string `json:"_type,omitempty"`
 }
 type GetImageCommand struct {
 	Parameters GetImageParameters

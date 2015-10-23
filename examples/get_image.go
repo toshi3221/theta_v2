@@ -5,6 +5,7 @@ import (
 	"github.com/toshi3221/theta_v2/command"
 	"io"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -25,7 +26,8 @@ func main() {
 	response, _ := client.CommandExecute(getImageCommand)
 	http_body := response.Results.(io.ReadCloser)
 	defer http_body.Close()
-	out, _ := os.Create(fileUri)
+	split_strings := strings.Split(fileUri, "/")
+	out, _ := os.Create(split_strings[len(split_strings)-1])
 	defer out.Close()
 	io.Copy(out, http_body)
 }

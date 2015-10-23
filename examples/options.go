@@ -42,10 +42,12 @@ func main() {
 	setOptionsCommand := new(command.SetOptionsCommand)
 	setOptionsCommand.Parameters.SessionId = sessionId
 	setOptions := new(command.Options)
-	image_type, image_width, image_height := "jpeg", 5600, 2800
+	image_type, image_width, image_height := "jpeg", 5376, 2688
 	setOptions.FileFormat = &command.FileFormat{Type: &image_type, Width: &image_width, Height: &image_height}
 	iso := 100
 	setOptions.Iso = &iso
+	exposureProgram := 9 // ISO priority program
+	setOptions.ExposureProgram = &exposureProgram
 	setOptionsCommand.Parameters.Options = setOptions
 	setOptionsResponse, _ := client.CommandExecute(setOptionsCommand)
 

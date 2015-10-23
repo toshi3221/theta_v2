@@ -9,7 +9,7 @@ type ListAllParameters struct {
 type ListAllEntry struct {
 	Name                   *string  `json:"name,omitempty"`
 	Uri                    *string  `json:"uri,omitempty"`
-	Size                   *string  `json:"size,omitempty"`
+	Size                   *int     `json:"size,omitempty"`
 	DateTimeZone           *string  `json:"dateTimeZone,omitempty"`
 	DateTime               *string  `json:"dateTime,omitempty"`
 	Lat                    *float32 `json:"lat,omitempty"`
@@ -17,7 +17,7 @@ type ListAllEntry struct {
 	Width                  *int     `json:"width,omitempty"`
 	Height                 *int     `json:"height,omitempty"`
 	IntervalCaptureGroupId *string  `json:"_intervalCaptureGroupId,omitempty"`
-	RecodeTime             *int     `json:"recodeTime,omitempty"`
+	RecordTime             *int     `json:"recordTime,omitempty"`
 }
 type ListAllResults struct {
 	Entries           *[]ListAllEntry `json:"entries,omitempty"`

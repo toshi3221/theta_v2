@@ -15,12 +15,12 @@ func main() {
 	}
 	client, _ := theta_v2.NewClient(host)
 
-	command := new(command.ListImagesCommand)
+	command := new(command.ListAllCommand)
 	parameters := &command.Parameters
 
-	entryCount, includeThumb := 10, false
+	entryCount, detail := 10, false
 	parameters.EntryCount = &entryCount
-	parameters.IncludeThumb = &includeThumb
+	parameters.Detail = &detail
 
 	client.CommandExecute(command)
 
