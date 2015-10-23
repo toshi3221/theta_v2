@@ -11,7 +11,7 @@ type DeleteCommand struct {
 }
 
 func (command *DeleteCommand) GetName() string {
-	return `camera.getImage`
+	return `camera.delete`
 }
 func (command *DeleteCommand) GetParameters() interface{} {
 	return &command.Parameters
