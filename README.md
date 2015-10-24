@@ -26,9 +26,8 @@ func main() {
   command := new(command.ListImagesCommand)
   parameters := &command.Parameters
 
-  entryCount, maxSize, includeThumb := 10, 10, false
+  entryCount, includeThumb := 10, false
   parameters.EntryCount = &entryCount
-  parameters.MaxSize = &maxSize
   parameters.IncludeThumb = &includeThumb
 
   client.CommandExecute(command)
