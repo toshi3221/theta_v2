@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"github.com/toshi3221/osc"
 	"github.com/toshi3221/osc/command"
+	"os"
 )
 
 func main() {
@@ -23,7 +23,11 @@ func main() {
 	parameters.MaxSize = &maxSize
 	parameters.IncludeThumb = &includeThumb
 
-	client.CommandExecute(command)
+	_, error := client.CommandExecute(command)
+	if error != nil {
+		fmt.Println("Error:", error)
+		return
+	}
 
 	results := command.Results
 	fmt.Println("totalEntries:", *results.TotalEntries)

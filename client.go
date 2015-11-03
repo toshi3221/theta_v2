@@ -6,15 +6,21 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Client struct {
-	Url      string
-	Response *http.Response
+	Url        string
+	httpClient http.Client
+	Response   *http.Response
 }
 
 func NewClient(url string) (client *Client, error error) {
 	client = new(Client)
+	timeout := time.Duration(5 * time.Second)
+	client.httpClient = http.Client{
+		Timeout: timeout,
+	}
 	client.Url = url
 	return
 }
@@ -40,7 +46,7 @@ type Info struct {
 }
 
 func (client *Client) Info() (info Info, error error) {
-	client.Response, error = http.Get(client.Url + "/osc/info")
+	client.Response, error = client.httpClient.Get(client.Url + "/osc/info")
 	if error != nil {
 		return
 	}
@@ -65,7 +71,7 @@ type State struct {
 }
 
 func (client *Client) State() (state State, error error) {
-	client.Response, error = http.PostForm(client.Url+"/osc/state", nil)
+	client.Response, error = client.httpClient.PostForm(client.Url+"/osc/state", nil)
 	if error != nil {
 		return
 	}
@@ -89,7 +95,7 @@ func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int)
 		request_json += `,` + strconv.Itoa(*waitTimeout)
 	}
 	request_json = request_json + `}`
-	client.Response, error = http.Post(client.Url+"/osc/checkForUpdates", "application/json", strings.NewReader(request_json))
+	client.Response, error = client.httpClient.Post(client.Url+"/osc/checkForUpdates", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
 	}
@@ -110,15 +116,15 @@ type CommandExecResponse struct {
 	Name     *string
 	State    *string
 	Id       *string
-	Results  interface{}
-	Error    *CommandExecError
-	Progress *CommandExecProgress
+	Results  interface{}          `json:"results,omitempty"`
+	Error    *CommandExecError    `json:"error,omitempty"`
+	Progress *CommandExecProgress `json:"progress,omitempty"`
 }
 
 func (client *Client) CommandExecute(command Command) (response CommandExecResponse, error error) {
 	parameters_json, _ := json.Marshal(command.GetParameters())
 	request_json := `{"name": "` + command.GetName() + `", "parameters": ` + string(parameters_json) + `}`
-	client.Response, error = http.Post(client.Url+"/osc/commands/execute", "application/json", strings.NewReader(request_json))
+	client.Response, error = client.httpClient.Post(client.Url+"/osc/commands/execute", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
 	}
@@ -136,7 +142,7 @@ func (client *Client) CommandExecute(command Command) (response CommandExecRespo
 
 func (client *Client) CommandStatus(id string, command Command) (response CommandExecResponse, error error) {
 	request_json := `{"id": "` + id + `"}`
-	client.Response, error = http.Post(client.Url+"/osc/commands/status", "application/json", strings.NewReader(request_json))
+	client.Response, error = client.httpClient.Post(client.Url+"/osc/commands/status", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
 	}

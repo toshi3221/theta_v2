@@ -4,7 +4,7 @@ type TakePictureParameters struct {
 	SessionId *string `json:"sessionId"`
 }
 type TakePictureResults struct {
-	FileUri *string
+	FileUri *string `json:"fileUri,omitempty"`
 }
 type TakePictureCommand struct {
 	Parameters TakePictureParameters
