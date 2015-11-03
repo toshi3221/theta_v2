@@ -22,7 +22,11 @@ func main() {
 	parameters.EntryCount = &entryCount
 	parameters.IncludeThumb = &includeThumb
 
-	client.CommandExecute(command)
+	_, error := client.CommandExecute(command)
+	if error != nil {
+		fmt.Println("Error:", error)
+		return
+	}
 
 	results := command.Results
 	fmt.Println("totalEntries:", *results.TotalEntries)
