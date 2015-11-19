@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+var clientSemaphore = make(chan int, 3)
+
 type Client struct {
 	Url        string
 	httpClient http.Client
@@ -46,6 +48,8 @@ type Info struct {
 }
 
 func (client *Client) Info() (info Info, error error) {
+	clientSemaphore <- 1
+	defer func() { <-clientSemaphore }()
 	client.Response, error = client.httpClient.Get(client.Url + "/osc/info")
 	if error != nil {
 		return
@@ -77,6 +81,8 @@ type State struct {
 }
 
 func (client *Client) State() (state State, error error) {
+	clientSemaphore <- 1
+	defer func() { <-clientSemaphore }()
 	client.Response, error = client.httpClient.PostForm(client.Url+"/osc/state", nil)
 	if error != nil {
 		return
@@ -101,6 +107,8 @@ func (client *Client) CheckForUpdates(stateFingerprint string, waitTimeout *int)
 		request_json += `,` + strconv.Itoa(*waitTimeout)
 	}
 	request_json = request_json + `}`
+	clientSemaphore <- 1
+	defer func() { <-clientSemaphore }()
 	client.Response, error = client.httpClient.Post(client.Url+"/osc/checkForUpdates", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
@@ -130,6 +138,8 @@ type CommandExecResponse struct {
 func (client *Client) CommandExecute(command Command) (response CommandExecResponse, error error) {
 	parameters_json, _ := json.Marshal(command.GetParameters())
 	request_json := `{"name": "` + command.GetName() + `", "parameters": ` + string(parameters_json) + `}`
+	clientSemaphore <- 1
+	defer func() { <-clientSemaphore }()
 	client.Response, error = client.httpClient.Post(client.Url+"/osc/commands/execute", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
@@ -148,6 +158,8 @@ func (client *Client) CommandExecute(command Command) (response CommandExecRespo
 
 func (client *Client) CommandStatus(id string, command Command) (response CommandExecResponse, error error) {
 	request_json := `{"id": "` + id + `"}`
+	clientSemaphore <- 1
+	defer func() { <-clientSemaphore }()
 	client.Response, error = client.httpClient.Post(client.Url+"/osc/commands/status", "application/json", strings.NewReader(request_json))
 	if error != nil {
 		return
